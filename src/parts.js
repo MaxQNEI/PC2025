@@ -132,6 +132,7 @@ const Parts = [
         cost: {
             normal: 3169,
         },
+        ignore: true,
     },
 
     {
@@ -146,6 +147,7 @@ const Parts = [
             europe: true,
         },
         ignore: true,
+        status: "ordered",
     },
 
     {

@@ -1,5 +1,6 @@
 <script>
     import { Parts } from "../parts.js";
+    import Strikethrough from "./Strikethrough.svelte";
 
     let ignored = null;
     let selected = null;
@@ -28,8 +29,9 @@
             selected = {};
 
             let index = 0;
-            for (const { type, ignore } of parts) {
-                if (!ignore && !selected[type]) {
+            for (const { type, ignore, status } of parts) {
+                if (status === "ordered") {
+                } else if (!ignore && !selected[type]) {
                     selected[type] = index;
                 } else if (ignore) {
                     ignored.push(index);
@@ -47,8 +49,9 @@
             maxtotal = {};
 
             let index = 0;
-            for (const { type, price } of parts) {
-                if (!ignored.includes(index)) {
+            for (const { type, price, status } of parts) {
+                if (status === "ordered") {
+                } else if (!ignored.includes(index)) {
                     maxtotal[type] = maxtotal[type] ?? 0;
                     maxtotal[type] = Math.max(maxtotal[type], price);
                 }
@@ -93,50 +96,81 @@
             <!-- HEADER -->
             <div class="header check">❌</div>
             <div class="header check">✅</div>
-            <div class="header image">IMAGE</div>
-            <div class="header info">INFO</div>
-            <div class="header link">LINK</div>
-            <div class="header cost">COST</div>
+            <div class="header">IMAGE</div>
+            <div class="header">INFO</div>
+            <div class="header">LINK</div>
+            <div class="header">COST</div>
 
             <!-- LIST -->
-            {#each parts as { type, image, name, link: href, seller, cost, price }, index}
-                <label class="check ignore" class:selected={selected[type] === index} data-type={type}>
-                    <input type="checkbox" checked={ignored.includes(index)} on:change={() => changeIgnored(index)} />
+            {#each parts as { type, image, name, link: href, seller, cost, price, status }, index}
+                <label
+                    class="check ignore"
+                    class:selected={selected[type] === index}
+                    data-type={type}
+                    disabled={status === "ordered"}
+                >
+                    <Strikethrough {status} />
+
+                    <input
+                        type="checkbox"
+                        checked={ignored.includes(index)}
+                        on:change={() => changeIgnored(index)}
+                        disabled={status === "ordered"}
+                    />
                 </label>
 
-                <label class="check selected" class:selected={selected[type] === index} data-type={type}>
+                <label
+                    class="check selected"
+                    class:selected={selected[type] === index}
+                    data-type={type}
+                    disabled={status === "ordered"}
+                >
+                    <Strikethrough {status} />
+
                     <input
                         type="checkbox"
                         checked={selected[type] === index}
                         on:change={() => changeSelected(type, index)}
+                        disabled={status === "ordered"}
                     />
                 </label>
 
-                <div class="image" class:selected={selected[type] === index} data-type={type}>
+                <div
+                    class="image"
+                    class:selected={selected[type] === index}
+                    data-type={type}
+                    on:pointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.png` })}
+                    on:pointerleave={() => (show = { ...show, active: false })}
+                >
+                    <Strikethrough {status} />
+
                     <div class="img-wrap">
                         <img src={`assets/${type}-${image}.png`} alt="product" />
                     </div>
                 </div>
 
                 <div class="info" class:selected={selected[type] === index} data-type={type}>
+                    <Strikethrough {status} />
+
                     <div class="bgimg" style="background-image: url(assets/{type}-{image}.png);"></div>
 
-                    <h3
-                        on:pointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.png` })}
-                        on:pointerleave={() => (show = { ...show, active: false })}
-                    >
+                    <h3>
                         <b>{type.toUpperCase()}</b>
                         {name}
                     </h3>
                 </div>
 
                 <div class="link" class:selected={selected[type] === index} data-type={type}>
+                    <Strikethrough {status} />
+
                     <a {href} target="_blank">
                         <img class="seller" src={`assets/seller-${seller}.png`} alt={seller} />
                     </a>
                 </div>
 
                 <div class="cost" class:selected={selected[type] === index} data-type={type}>
+                    <Strikethrough {status} />
+
                     {#if cost.discount}
                         <div class="cost-red">{cost.normal}₴</div>
                         <div class="cost-green" class:europe={cost.europe}>{price}₴</div>
@@ -158,7 +192,7 @@
     </div>
 </div>
 
-{#if false}
+{#if true}
     <div class="show" class:active={show.active}>
         {#if show.image}
             <!-- svelte-ignore a11y_missing_attribute -->
@@ -189,14 +223,22 @@
     }
 
     .list > * {
+        position: relative;
         min-height: 60px;
 
         transition: all 500ms ease;
     }
 
     .header {
-        justify-self: center;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: #ffffff;
+        width: 100%;
+
+        /* justify-items: center; */
         align-content: center;
+        text-align: center;
 
         font-weight: bold;
     }
@@ -337,7 +379,7 @@
 
     /*  */
     [data-type]:not(.selected) {
-        filter: grayscale(1) opacity(0.5);
+        filter: grayscale(0.5) opacity(0.5);
     }
 
     [data-type="case"] {
@@ -380,7 +422,7 @@
         background-color: rgba(150, 0, 200, 0.1);
     }
 
-    .list > *:not(.header) {
+    .list > *:not(.header, .strikethrough) {
         border-bottom-width: 2px;
         border-bottom-style: solid;
     }
