@@ -1,5 +1,5 @@
 <script>
-    import PartsDefault from "./components/PartsDefault.svelte";
-    </script>
+    import Parts from "./components/Parts/Parts.svelte";
+</script>
 
-<PartsDefault />
+<Parts />

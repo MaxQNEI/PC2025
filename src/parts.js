@@ -14,6 +14,7 @@ function ToId(data) {
     return str;
 }
 
+ids = [];
 const Parts = [
     {
         type: "cpu",
@@ -21,10 +22,19 @@ const Parts = [
         name: "AMD Ryzen 7 7700 (100-000000592) sAM5 Tray, 3,8 (5,3 GHz Turbo), 32MB, Without Cooler",
         link: "https://hard.rozetka.com.ua/ua/433539365/p433539365/",
         seller: "rozetka",
-        cost: {
-            normal: 10160,
-            discount: 8570,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 10160,
+                discount: 8570,
+            },
+
+            {
+                date: "2025-06-03",
+                normal: 10270,
+                discount: 8470,
+            },
+        ],
     },
 
     {
@@ -33,10 +43,13 @@ const Parts = [
         name: "AMD Ryzen 7 7700 3.8GHz/32MB (100-100000592BOX) sAM5 BOX",
         link: "https://hard.rozetka.com.ua/ua/amd-100-100000592box/p364755915/",
         seller: "rozetka",
-        cost: {
-            normal: 15419,
-            discount: 13299,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 15419,
+                discount: 13299,
+            },
+        ],
         ignore: true,
     },
 
@@ -46,10 +59,13 @@ const Parts = [
         name: "MSI PRO B650-S Wi-Fi (sAM5, AMD B650, PCI-Ex16)",
         link: "https://hard.rozetka.com.ua/ua/msi-pro-b650-s-wifi/p407082552/",
         seller: "rozetka",
-        cost: {
-            normal: 7266,
-            discount: 6499,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 7266,
+                discount: 6499,
+            },
+        ],
     },
 
     {
@@ -58,10 +74,13 @@ const Parts = [
         name: "Gigabyte PCI-Ex GeForce RTX 5070 Ti Windforce SFF 16GB GDDR7 (256bit) (2452/28000) (HDMI, 3 x DisplayPort) (GV-N507TWF3-16GD)",
         link: "https://hard.rozetka.com.ua/ua/gigabyte-gv-n507twf3-16gd/p512016864/",
         seller: "rozetka",
-        cost: {
-            normal: 43999,
-            discount: 43019,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 43999,
+                discount: 43019,
+            },
+        ],
     },
 
     {
@@ -70,10 +89,29 @@ const Parts = [
         name: "Gigabyte GeForce RTX 5070 Ti WINDFORCE SFF 16384MB (GV-N507TWF3-16GD)",
         link: "https://telemart.ua/ua/products/gigabyte-geforce-rtx-5070-ti-windforce-sff-16384mb-gv-n507twf3-16gd/",
         seller: "telemart",
-        cost: {
-            normal: 45295,
-            discount: 42999,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 45295,
+                discount: 42999,
+            },
+        ],
+    },
+
+    {
+        type: "gpu",
+        image: "02",
+        name: "MSI PCI-Ex GeForce RTX 5080 SHADOW 3X OC 16GB GDDR7 (256bit) (2655/30000) (HDMI, 3 x DisplayPort) (RTX 5080 16G SHADOW 3X OC)",
+        link: "https://hard.rozetka.com.ua/ua/msi-rtx-5080-16g-shadow-3x-oc/p490840829/",
+        seller: "rozetka",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 65999,
+                discount: 55499,
+            },
+        ],
+        ignore: true,
     },
 
     {
@@ -82,10 +120,13 @@ const Parts = [
         name: "DDR5 32GB (2x16GB) 5200 MHz Beast AM5 Black Kingston Fury (ex.HyperX) (KF552C36BBEK2-32)",
         link: "https://enko.com.ua/shop/komplektuyuschie-pk/operativnaya-pamyat/ddr5/432096-modul-pamyat-dlya-komputera-ddr5-32gb-2x16gb-5200-mhz-beas/",
         seller: "enko",
-        cost: {
-            normal: 4399,
-            discount: 3938,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 4399,
+                discount: 3938,
+            },
+        ],
     },
 
     {
@@ -94,10 +135,13 @@ const Parts = [
         name: "Kingston FURY DDR5-5200 32768MB PC5-41600 (Kit of 2x16384) Beast AM5 Black (KF552C36BBEK2-32)",
         link: "https://hard.rozetka.com.ua/ua/kingston-fury-exhyperx-kf552c36bbek2-32/p356031282/",
         seller: "rozetka",
-        cost: {
-            normal: 4959,
-            discount: 4299,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 4959,
+                discount: 4299,
+            },
+        ],
     },
 
     {
@@ -106,10 +150,64 @@ const Parts = [
         name: "Gigabyte GOLD 750W ATX 3.0 (GP-UD750GM PG5)",
         link: "https://hard.rozetka.com.ua/ua/gigabyte-gp-ud750gm-pg5/p393683826/",
         seller: "rozetka",
-        cost: {
-            normal: 5499,
-            discount: 4599,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 5499,
+                discount: 4599,
+            },
+        ],
+    },
+
+    {
+        type: "psu",
+        image: "01",
+        name: "Gigabyte UD1000GM PG5 power supply unit 1000 W 20+4 pin ATX ATX Black (GP-UD1000GM PG5 Rev 2.0)",
+        link: "https://hard.rozetka.com.ua/ua/383802378/p383802378/",
+        seller: "rozetka-eu",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 6345,
+                discount: 5617,
+                delivery: 179,
+                europe: true,
+            },
+        ],
+        ignore: true,
+    },
+
+    {
+        type: "psu",
+        image: "02",
+        name: "MSI MAG A850GL PCIE5 850W (306-7ZP8A11-CE0)",
+        link: "https://hard.rozetka.com.ua/ua/msi-306-7zp8a11-ce0/p400641204/",
+        seller: "rozetka-eu",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 5892,
+                discount: 5039,
+                delivery: 179,
+                europe: true,
+            },
+        ],
+        ignore: true,
+    },
+
+    {
+        type: "psu",
+        image: "03",
+        name: "Corsair RM1000x Shift PCIE5 1000W (CP-9020253-EU)",
+        link: "https://hard.rozetka.com.ua/ua/corsair-cp-9020253-eu/p377616381/",
+        seller: "rozetka",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 11829,
+            },
+        ],
+        ignore: true,
     },
 
     {
@@ -118,9 +216,12 @@ const Parts = [
         name: "be quiet! Dark Rock Pro 5 (BK036)",
         link: "https://hard.rozetka.com.ua/ua/be-quiet-bk036/p404068188/",
         seller: "rozetka",
-        cost: {
-            normal: 4649,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 4649,
+            },
+        ],
     },
 
     {
@@ -129,9 +230,12 @@ const Parts = [
         name: "DeepCool AK620 Zero Dark Black",
         link: "https://hard.rozetka.com.ua/ua/deepcool-ak620-zero-dark/p359852886/",
         seller: "rozetka",
-        cost: {
-            normal: 3169,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 3169,
+            },
+        ],
         ignore: true,
     },
 
@@ -141,12 +245,15 @@ const Parts = [
         name: "be quiet! Silent Base 601 Black (BG026)",
         link: "https://hard.rozetka.com.ua/ua/be-quiet-4260052187111/p407609370/",
         seller: "rozetka-eu",
-        cost: {
-            normal: 6680,
-            delivery: 509,
-            europe: true,
-        },
-        ignore: true,
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 6680,
+                delivery: 509,
+                europe: true,
+            },
+        ],
+        // ignore: true,
         status: "ordered",
     },
 
@@ -156,9 +263,12 @@ const Parts = [
         name: "Thermal Grizzly Kryonaut Extreme, 2 г, шприц, 14.2 Вт/мК (TG-KE-002-R)",
         link: "https://exe.ua/product/p382648/",
         seller: "exe",
-        cost: {
-            normal: 630,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 630,
+            },
+        ],
     },
 
     {
@@ -167,9 +277,12 @@ const Parts = [
         name: "Thermal Grizzly Kryonaut Extreme 2g (TG-KE-002-R)",
         link: "https://hard.rozetka.com.ua/ua/358886094/p358886094/",
         seller: "rozetka",
-        cost: {
-            normal: 695,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 695,
+            },
+        ],
     },
 
     {
@@ -178,10 +291,18 @@ const Parts = [
         name: "Thermal Grizzly Kryonaut 1g (TG-K-001-RS)",
         link: "https://hard.rozetka.com.ua/ua/358886079/p358886079/",
         seller: "rozetka",
-        cost: {
-            normal: 258,
-        },
+        costs: [
+            {
+                date: "2025-06-01",
+                normal: 258,
+            },
+        ],
     },
-].map((p) => ({ ...p, id: ToId(p) }));
+].map((p) => ({
+    ...p,
+    id: `${p.name}-${p.seller}`,
+    costs: p.costs.sort(({ date: a }, { date: b }) => (a === b ? 0 : a > b ? 1 : -1)),
+    cost: p.costs.sort(({ date: a }, { date: b }) => (a === b ? 0 : a > b ? -1 : 11))[0],
+}));
 
 export { Parts };

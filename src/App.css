@@ -7,12 +7,14 @@
 }
 
 body {
+    background-color: #f0f0f0;
     font-family: "Jura", sans-serif;
     cursor: default;
 }
 
 label {
     display: block;
+    user-select: none;
 }
 
 img {
@@ -34,4 +36,16 @@ h1,
 h2,
 h3 {
     font-weight: normal;
+}
+
+@media (max-width: 599.95px) {
+    .only-desktop {
+        display: none !important;
+    }
+}
+
+@media (min-width: 600px) {
+    .only-mobile {
+        display: none !important;
+    }
 }
