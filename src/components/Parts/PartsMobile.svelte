@@ -80,7 +80,7 @@
             return;
         }
 
-        const a = innerWidth / 4;
+        const a = innerWidth / 6;
 
         if (slider.end < -a) {
             current = Math.min(current + 1, _parts.length - 1);

@@ -19,7 +19,7 @@
                 <input
                     type="checkbox"
                     checked={editing}
-                    on:change={(event) => {
+                    onchange={(event) => {
                         event.preventDefault();
                         editing = !editing;
                     }}
@@ -57,7 +57,7 @@
                     <input
                         type="checkbox"
                         checked={ignored.includes(id)}
-                        on:change={(event) => {
+                        onchange={(event) => {
                             event.preventDefault();
                             changeIgnored(id);
                         }}
@@ -78,7 +78,7 @@
                     <input
                         type="checkbox"
                         checked={selected.includes(id)}
-                        on:change={(event) => {
+                        onchange={(event) => {
                             event.preventDefault();
                             changeSelected(type, id);
                         }}
@@ -91,8 +91,8 @@
                 class="image"
                 class:selected={selected.includes(id)}
                 data-type={type}
-                on:pointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.png` })}
-                on:pointerleave={() => (show = { ...show, active: false })}
+                onpointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.png` })}
+                onpointerleave={() => (show = { ...show, active: false })}
             >
                 <Strikethrough {status} />
 
