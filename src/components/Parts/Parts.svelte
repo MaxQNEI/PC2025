@@ -71,7 +71,7 @@
             resultFx = resultFx === 1 ? 2 : 1;
         }
 
-        parts = parts.filter(({ id }) => editing || selected.includes(id));
+        parts = parts.filter(({ id }) => !editing || selected.includes(id));
     }
 
     $: {
