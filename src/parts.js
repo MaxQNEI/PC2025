@@ -54,6 +54,38 @@ const Parts = [
     },
 
     {
+        type: "cpu",
+        image: "02",
+        name: "AMD Ryzen 7 7700 (100-000000592)",
+        link: "https://luckylink.kiev.ua/amd-ryzen-7-7700-100-000000592/",
+        seller: "luckylink",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 10299,
+                discount: 8299,
+            },
+        ],
+        ignore: true,
+    },
+
+    {
+        type: "cpu",
+        image: "03",
+        name: "AMD Ryzen 7 7700 (100-000000592)",
+        link: "https://tehno-mart.com.ua/amd-ryzen-7-7700-100-000000592/?utm_source=E-katalog&utm_medium=cpc",
+        seller: "tehnomart",
+        costs: [
+            {
+                date: "2025-06-03",
+                normal: 8691,
+                discount: 8199,
+            },
+        ],
+        ignore: true,
+    },
+
+    {
         type: "motherboard",
         image: "00",
         name: "MSI PRO B650-S Wi-Fi (sAM5, AMD B650, PCI-Ex16)",

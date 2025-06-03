@@ -4,24 +4,20 @@
 
     // export let changeIgnored = () => {};
     // export let changeSelected = () => {};
-    export let editing = true;
+    // export let editing = true;
     // export let ignored = [];
     export let selected = [];
     export let parts = [];
 
-    let _parts = [];
-
     let current = 0;
 
     let slider = {
-        down: false,
+        down: null,
         start: [],
         xPrev: "-100%",
         xCurrent: 0,
         xNext: "100%",
     };
-
-    $: _parts = parts.filter(({ id }) => editing || selected.includes(id));
 
     onMount(() => {
         addEventListener("scroll", onScroll);
@@ -83,7 +79,7 @@
         const a = innerWidth / 6;
 
         if (slider.end < -a) {
-            current = Math.min(current + 1, _parts.length - 1);
+            current = Math.min(current + 1, parts.length - 1);
         } else if (slider.end > a) {
             current = Math.max(current - 1, 0);
         }
@@ -122,10 +118,10 @@
     }
 </script>
 
-<div class="list-scroll">
+<div class="only-mobile list-scroll">
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="list" ontouchstart={onPointerDown} oncontextmenu={onContextMenu}>
-        {#each _parts as { id, type, image, name, link: href, seller, cost, price, status }, index}
+        {#each parts as { id, type, image, name, link: href, seller, cost, price, status }, index}
             <div
                 class="cart"
                 class:selected={selected.includes(id)}
@@ -165,6 +161,10 @@
                 </a>
             </div>
         {/each}
+
+        <div class="hint swipe" class:hide={slider.down !== null}>
+            <h2>&LeftArrow; SWIPE &RightArrow;</h2>
+        </div>
     </div>
 </div>
 
@@ -315,5 +315,61 @@
     [data-type="gpu"] {
         border-bottom-color: rgba(150, 0, 200);
         background-color: rgba(150, 0, 200, 0.1);
+    }
+
+    .hint.swipe {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 20dvh;
+        font-size: xx-large;
+        font-weight: bold;
+        text-align: center;
+        pointer-events: none;
+
+        transition: all 500ms ease;
+        animation: HintSwipe 4000ms ease infinite;
+    }
+    .hint.swipe.hide {
+        bottom: -50dvh;
+        opacity: 0;
+    }
+
+    @keyframes HintSwipe {
+        0% {
+            transform: translateX(0);
+        }
+
+        20% {
+            transform: translateX(0);
+        }
+
+        30% {
+            transform: translateX(-10dvw) skewY(-1deg);
+        }
+
+        40% {
+            transform: translateX(-10dvw) skewY(-1deg);
+        }
+
+        50% {
+            transform: translateX(0dvw) skewY(0deg);
+        }
+
+        55% {
+            transform: translateX(0dvw) skewY(0deg);
+        }
+
+        65% {
+            transform: translateX(10dvw) skewY(1deg);
+        }
+
+        75% {
+            transform: translateX(10dvw) skewY(1deg);
+        }
+
+        85% {
+            transform: translateX(0);
+        }
     }
 </style>

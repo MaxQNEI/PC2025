@@ -70,6 +70,17 @@
         if (prevTotal !== total || prevMaxTotal !== maxtotal) {
             resultFx = resultFx === 1 ? 2 : 1;
         }
+
+        parts = parts.filter(({ id }) => editing || selected.includes(id));
+    }
+
+    $: {
+        console.log(
+            parts
+                .filter(({ id }) => selected.includes(id))
+                .map(({ name }, index) => `${index + 1}. ${name}`)
+                .join("\n"),
+        );
     }
 
     function changeIgnored(id) {
