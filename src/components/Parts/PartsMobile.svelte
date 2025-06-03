@@ -25,14 +25,14 @@
 
     onMount(() => {
         addEventListener("scroll", onScroll);
-        addEventListener("pointermove", onPointerMove);
-        addEventListener("pointerup", onPointerUp);
+        addEventListener("touchmove", onPointerMove);
+        addEventListener("touchup", onPointerUp);
     });
 
     onDestroy(() => {
         addEventListener("scroll", onScroll);
-        removeEventListener("pointermove", onPointerMove);
-        removeEventListener("pointerup", onPointerUp);
+        removeEventListener("touchmove", onPointerMove);
+        removeEventListener("touchup", onPointerUp);
     });
 
     function onScroll(event) {
@@ -125,7 +125,7 @@
 
 <div class="list-scroll">
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="list" on:pointerdown={onPointerDown} on:contextmenu={onContextMenu}>
+    <div class="list" on:touchdown={onPointerDown} on:contextmenu={onContextMenu}>
         {#each _parts as { id, type, image, name, link: href, seller, cost, price, status }, index}
             <div
                 class="cart"
