@@ -26,13 +26,13 @@
     onMount(() => {
         addEventListener("scroll", onScroll);
         addEventListener("touchmove", onPointerMove);
-        addEventListener("touchup", onPointerUp);
+        addEventListener("touchend", onPointerUp);
     });
 
     onDestroy(() => {
         addEventListener("scroll", onScroll);
         removeEventListener("touchmove", onPointerMove);
-        removeEventListener("touchup", onPointerUp);
+        removeEventListener("touchend", onPointerUp);
     });
 
     function onScroll(event) {
@@ -51,7 +51,8 @@
         slider = {
             ...slider,
             down: true,
-            start: [event.clientX, event.clientY],
+            start: [event.touches[0].clientX, event.touches[0].clientY],
+            end: 0,
             xPrev: `-100%`,
             xCurrent: `0`,
             xNext: `100%`,
@@ -63,15 +64,14 @@
             return;
         }
 
-        event.preventDefault();
-
-        const x = event.clientX - slider.start[0];
+        const end = event.touches[0].clientX - slider.start[0];
 
         slider = {
             ...slider,
-            xPrev: `calc(-100% + ${x}px)`,
-            xCurrent: `${x}px`,
-            xNext: `calc(100% + ${x}px)`,
+            end,
+            xPrev: `calc(-100% + ${end}px)`,
+            xCurrent: `${end}px`,
+            xNext: `calc(100% + ${end}px)`,
         };
     }
 
@@ -80,12 +80,11 @@
             return;
         }
 
-        const end = event.clientX - slider.start[0];
         const a = innerWidth / 4;
 
-        if (end < -a) {
+        if (slider.end < -a) {
             current = Math.min(current + 1, _parts.length - 1);
-        } else if (end > a) {
+        } else if (slider.end > a) {
             current = Math.max(current - 1, 0);
         }
 
@@ -125,7 +124,7 @@
 
 <div class="list-scroll">
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="list" on:touchdown={onPointerDown} on:contextmenu={onContextMenu}>
+    <div class="list" ontouchstart={onPointerDown} oncontextmenu={onContextMenu}>
         {#each _parts as { id, type, image, name, link: href, seller, cost, price, status }, index}
             <div
                 class="cart"
