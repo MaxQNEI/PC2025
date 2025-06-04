@@ -3,10 +3,11 @@
 
     export let changeIgnored = () => {};
     export let changeSelected = () => {};
-    export let editing = true;
-    export let ignored = null;
-    export let selected = null;
-    export let parts = null;
+    export let editingChange = (editing) => {};
+    export let editing = false;
+    export let ignored = [];
+    export let selected = [];
+    export let parts = [];
 
     let show = { show: false };
 </script>
@@ -21,7 +22,7 @@
                     checked={editing}
                     onchange={(event) => {
                         event.preventDefault();
-                        editing = !editing;
+                        editingChange(!editing);
                     }}
                 />
 
@@ -44,7 +45,7 @@
         <div class="header">COST</div>
 
         <!-- LIST -->
-        {#each parts.filter(({ id }) => editing || selected.includes(id)) as { id, type, image, name, link: href, seller, cost, price, status }}
+        {#each parts as { id, type, image, name, link: href, seller, cost, price, status }}
             {#if editing}
                 <label
                     class="check ignore"

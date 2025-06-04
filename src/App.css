@@ -39,6 +39,10 @@ h3 {
 }
 
 @media (max-width: 599.95px) {
+    body {
+        font-size: large;
+    }
+
     .only-desktop {
         display: none !important;
     }
@@ -48,4 +52,38 @@ h3 {
     .only-mobile {
         display: none !important;
     }
+}
+
+button {
+    width: 100%;
+    padding: 20px;
+    border: unset;
+    border-radius: 4px;
+    background-color: #1e90ff;
+    font: inherit;
+    color: #ffffff;
+    cursor: pointer;
+
+    transition: all 200ms ease;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+button.green {
+    background-color: #9acd32;
+    color: #111111;
+}
+
+button.orange {
+    background-color: #ffa500;
+}
+
+button.red {
+    background-color: #ff6347;
+}
+
+button.gray {
+    background-color: #999999;
 }

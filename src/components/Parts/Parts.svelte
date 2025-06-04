@@ -9,7 +9,8 @@
     let selected = null;
     let total = 0;
     let maxtotal = 0;
-    let parts = null;
+    let parts = null,
+        _parts = null;
 
     let resultFx = 1;
 
@@ -71,16 +72,8 @@
             resultFx = resultFx === 1 ? 2 : 1;
         }
 
-        parts = parts.filter(({ id }) => !editing || selected.includes(id));
-    }
-
-    $: {
-        console.log(
-            parts
-                .filter(({ id }) => selected.includes(id))
-                .map(({ name }, index) => `${index + 1}. ${name}`)
-                .join("\n"),
-        );
+        _parts = _parts ?? parts;
+        parts = _parts.filter(({ id }) => editing || selected.includes(id));
     }
 
     function changeIgnored(id) {
@@ -106,11 +99,24 @@
             selected = [...selected, id];
         }
     }
+
+    function editingChange(newEditing) {
+        setTimeout(() => (editing = !!newEditing), 100);
+    }
 </script>
 
 <div class="parts">
     {#each [PartsDesktop, PartsMobile] as component}
-        <svelte:component this={component} {changeIgnored} {changeSelected} {editing} {ignored} {selected} {parts} />
+        <svelte:component
+            this={component}
+            {changeIgnored}
+            {changeSelected}
+            {editingChange}
+            {editing}
+            {ignored}
+            {selected}
+            {parts}
+        />
     {/each}
 
     <div class="result" class:fx1={resultFx === 1} class:fx2={resultFx === 2}>
@@ -179,6 +185,7 @@
 
     @media (max-width: 599.95px) {
         .result {
+            font-size: x-large;
             text-align: center;
         }
     }

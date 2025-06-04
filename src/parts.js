@@ -71,7 +71,7 @@ const Parts = [
 
     {
         type: "cpu",
-        image: "03",
+        image: "02",
         name: "AMD Ryzen 7 7700 (100-000000592)",
         link: "https://tehno-mart.com.ua/amd-ryzen-7-7700-100-000000592/?utm_source=E-katalog&utm_medium=cpc",
         seller: "tehnomart",

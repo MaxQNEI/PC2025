@@ -2,10 +2,11 @@
     import { onDestroy, onMount } from "svelte";
     import Strikethrough from "../Strikethrough.svelte";
 
-    // export let changeIgnored = () => {};
-    // export let changeSelected = () => {};
-    // export let editing = true;
-    // export let ignored = [];
+    export let changeIgnored = () => {};
+    export let changeSelected = () => {};
+    export let editingChange = (editing) => {};
+    export let editing = false;
+    export let ignored = [];
     export let selected = [];
     export let parts = [];
 
@@ -116,9 +117,17 @@
 
         return "";
     }
+
+    $: console.log(editing);
 </script>
 
 <div class="only-mobile list-scroll">
+    <div class="tools">
+        <button type="button" class:gray={editing} class:green={!editing} ontouchend={() => editingChange(!editing)}>
+            {editing ? "SELECTING" : "CART"}
+        </button>
+    </div>
+
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="list" ontouchstart={onPointerDown} oncontextmenu={onContextMenu}>
         {#each parts as { id, type, image, name, link: href, seller, cost, price, status }, index}
@@ -159,6 +168,20 @@
                         {/if}
                     </div>
                 </a>
+
+                <div class="actions">
+                    <button type="button" class:gray={!ignored.includes(id)} ontouchend={() => changeIgnored(id)}>
+                        IGNORE
+                    </button>
+
+                    <button
+                        type="button"
+                        class:gray={!selected.includes(id)}
+                        ontouchend={() => changeSelected(type, id)}
+                    >
+                        CART
+                    </button>
+                </div>
             </div>
         {/each}
 
@@ -171,7 +194,13 @@
 <style>
     .list-scroll {
         display: grid;
+        grid-template-rows: max-content 1fr max-content;
         overflow: hidden;
+    }
+
+    .tools {
+        padding: 20px;
+        padding-bottom: 0;
     }
 
     .list {
@@ -206,9 +235,7 @@
         transform: translateX(-100%) scale(0.9);
     }
 
-    .slide-current {
-        /* transform: translateX(-100%) scale(0.9); */
-    }
+    /* .slide-current {} */
 
     .slide-next {
         transform: translateX(100%) scale(0);
@@ -228,9 +255,7 @@
         width: 60%;
     }
 
-    .name {
-        /* text-align: center; */
-    }
+    /* .name {} */
 
     .link-cost {
         display: grid;
@@ -270,6 +295,12 @@
         text-decoration: line-through;
         text-decoration-thickness: 2px;
         color: tomato;
+    }
+
+    .actions {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr 1fr;
     }
 
     /*  */
@@ -327,11 +358,11 @@
         text-align: center;
         pointer-events: none;
 
-        transition: all 500ms ease;
+        transition: all 1000ms ease;
         animation: HintSwipe 4000ms ease infinite;
     }
     .hint.swipe.hide {
-        bottom: -50dvh;
+        bottom: -10dvh;
         opacity: 0;
     }
 
