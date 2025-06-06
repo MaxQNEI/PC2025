@@ -5,10 +5,12 @@
     export let changeIgnored = () => {};
     export let changeSelected = () => {};
     export let editingChange = (editing) => {};
+    export let clear = () => {};
     export let editing = false;
     export let ignored = [];
     export let selected = [];
     export let parts = [];
+    export let saved = false;
 
     let current = 0;
 
@@ -117,8 +119,6 @@
 
         return "";
     }
-
-    $: console.log(editing);
 </script>
 
 <div class="only-mobile list-scroll">

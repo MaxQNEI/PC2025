@@ -23,15 +23,6 @@ img {
     pointer-events: none;
 }
 
-a {
-    color: tomato;
-    text-decoration: underline;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
 h1,
 h2,
 h3 {
@@ -86,4 +77,21 @@ button.red {
 
 button.gray {
     background-color: #999999;
+}
+
+a,
+.link {
+    display: inline-block;
+    width: max-content;
+    padding: unset;
+    border: unset;
+    border-radius: 0;
+    background: unset !important;
+    color: tomato;
+    text-decoration: underline;
+}
+
+a:hover,
+.link:hover {
+    text-decoration: none;
 }

@@ -4,10 +4,12 @@
     export let changeIgnored = () => {};
     export let changeSelected = () => {};
     export let editingChange = (editing) => {};
+    export let clear = () => {};
     export let editing = false;
     export let ignored = [];
     export let selected = [];
     export let parts = [];
+    export let saved = false;
 
     let show = { show: false };
 </script>
@@ -28,6 +30,10 @@
 
                 <span>Editing</span>
             </label>
+
+            {#if saved}
+                <h4>Saved (<button type="button" class="link" onclick={clear}>clear</button>)</h4>
+            {/if}
         </div>
 
         <!-- HEADER -->
@@ -113,7 +119,7 @@
                 </h3>
             </div>
 
-            <div class="link" class:selected={selected.includes(id)} data-type={type}>
+            <div class="shop" class:selected={selected.includes(id)} data-type={type}>
                 <Strikethrough {status} />
 
                 <a {href} target="_blank">
@@ -170,6 +176,11 @@
     .tools {
         grid-column-start: 1;
         grid-column-end: 7;
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 8px;
+        justify-content: flex-start;
 
         min-height: unset;
         padding: 10px;
@@ -245,7 +256,7 @@
         max-height: 30px;
     }
 
-    .link {
+    .shop {
         display: grid;
         justify-content: flex-start;
         align-content: center;
@@ -392,7 +403,7 @@
             filter: blur(0);
         }
 
-        .link,
+        .shop,
         .cost {
             margin-bottom: 20px;
         }
@@ -401,7 +412,7 @@
             border-top: 2px solid #000000;
         }
 
-        .link,
+        .shop,
         .cost {
             border-bottom: 2px solid #000000;
         }

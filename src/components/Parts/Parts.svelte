@@ -5,8 +5,8 @@
 
     let editing = false;
 
-    let ignored = null;
-    let selected = null;
+    let ignored = JSON.parse(localStorage.getItem("ignored") ?? "null");
+    let selected = JSON.parse(localStorage.getItem("selected") ?? "null");
     let total = 0;
     let maxtotal = 0;
     let parts = null,
@@ -14,7 +14,11 @@
 
     let resultFx = 1;
 
-    $: {
+    let saved = false;
+
+    $: upd();
+
+    function upd() {
         // Defaults
         if (parts === null) {
             parts = Parts.map((p) => ({
@@ -29,14 +33,9 @@
 
         if (ignored === null) {
             ignored = [];
-
             selected = {};
 
             for (const { id, type, ignore, status } of parts) {
-                // if (status === "ordered") {
-                //     continue;
-                // }
-
                 if (!ignore && !selected[type]) {
                     selected[type] = id;
                 } else if (ignore) {
@@ -74,6 +73,8 @@
 
         _parts = _parts ?? parts;
         parts = _parts.filter(({ id }) => editing || selected.includes(id));
+
+        saved = !!(localStorage.getItem("ignored") || localStorage.getItem("selected"));
     }
 
     function changeIgnored(id) {
@@ -82,6 +83,9 @@
         } else {
             ignored = [...ignored, id];
         }
+
+        localStorage.setItem("ignored", JSON.stringify(ignored));
+        localStorage.setItem("selected", JSON.stringify(selected));
     }
 
     function changeSelected(type, id) {
@@ -98,10 +102,23 @@
 
             selected = [...selected, id];
         }
+
+        localStorage.setItem("ignored", JSON.stringify(ignored));
+        localStorage.setItem("selected", JSON.stringify(selected));
     }
 
     function editingChange(newEditing) {
         setTimeout(() => (editing = !!newEditing), 100);
+    }
+
+    function clear() {
+        localStorage.removeItem("ignored");
+        localStorage.removeItem("selected");
+
+        ignored = selected = null;
+        total = maxtotal = 0;
+
+        upd();
     }
 </script>
 
@@ -112,10 +129,12 @@
             {changeIgnored}
             {changeSelected}
             {editingChange}
+            {clear}
             {editing}
             {ignored}
             {selected}
             {parts}
+            {saved}
         />
     {/each}
 

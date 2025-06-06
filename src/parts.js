@@ -98,6 +98,22 @@ const Parts = [
                 discount: 6499,
             },
         ],
+        ignore: true,
+    },
+
+    {
+        type: "motherboard",
+        image: "01",
+        name: "Gigabyte B850 GAMING WIFI6 (sAM5, AMD B850, PCI-Ex16)",
+        link: "https://hard.rozetka.com.ua/ua/gigabyte-b850-gaming-wifi6/p478549269/",
+        seller: "rozetka",
+        costs: [
+            {
+                date: "2025-06-06",
+                normal: 8889,
+                discount: 8299,
+            },
+        ],
     },
 
     {
