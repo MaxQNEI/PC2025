@@ -120,6 +120,16 @@
 
         upd();
     }
+
+    $: {
+        console.clear();
+        console.log(
+            _parts
+                .filter(({ id }) => selected.includes(id))
+                .map(({ name }, index) => `#${index + 1}. ${name}`)
+                .join("\n"),
+        );
+    }
 </script>
 
 <div class="parts">
