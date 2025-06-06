@@ -81,14 +81,17 @@ button.gray {
 
 a,
 .link {
+    color: tomato;
+    text-decoration: underline;
+}
+
+.link {
     display: inline-block;
     width: max-content;
     padding: unset;
     border: unset;
     border-radius: 0;
     background: unset !important;
-    color: tomato;
-    text-decoration: underline;
 }
 
 a:hover,

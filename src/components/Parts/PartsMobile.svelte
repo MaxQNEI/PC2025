@@ -154,8 +154,8 @@
 
                 <div></div>
 
-                <a class="link-cost" {href} target="_blank">
-                    <div class="link">
+                <a class="shop-cost" {href} target="_blank">
+                    <div class="shop">
                         <img class="seller" src={`assets/seller-${seller}.png`} alt={seller} />
                     </div>
 
@@ -257,7 +257,7 @@
 
     /* .name {} */
 
-    .link-cost {
+    .shop-cost {
         display: grid;
         grid-auto-flow: column;
         grid-gap: 20px;
