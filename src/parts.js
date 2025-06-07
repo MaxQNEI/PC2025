@@ -270,6 +270,7 @@ const Parts = [
                 normal: 4649,
             },
         ],
+        ignore: true,
     },
 
     {
@@ -288,6 +289,20 @@ const Parts = [
     },
 
     {
+        type: "cooler",
+        image: "02",
+        name: "MSI Mag Coreliquid A13 360 Black",
+        link: "https://hard.rozetka.com.ua/ua/msi-mag-coreliquid-a13-360/p465181079/",
+        seller: "rozetka",
+        costs: [
+            {
+                date: "2025-06-07",
+                normal: 4399,
+            },
+        ],
+    },
+
+    {
         type: "case",
         image: "00",
         name: "be quiet! Silent Base 601 Black (BG026)",
@@ -301,7 +316,7 @@ const Parts = [
                 europe: true,
             },
         ],
-        // ignore: true,
+        ignore: true,
         status: "ordered",
     },
 
@@ -317,6 +332,7 @@ const Parts = [
                 normal: 630,
             },
         ],
+        ignore: true,
     },
 
     {
@@ -331,6 +347,7 @@ const Parts = [
                 normal: 695,
             },
         ],
+        ignore: true,
     },
 
     {
@@ -345,6 +362,7 @@ const Parts = [
                 normal: 258,
             },
         ],
+        ignore: true,
     },
 ].map((p) => ({
     ...p,

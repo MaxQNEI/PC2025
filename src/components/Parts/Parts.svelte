@@ -16,7 +16,65 @@
 
     let saved = false;
 
-    $: upd();
+    $: {
+        // Defaults
+        if (parts === null) {
+            parts = Parts.map((p) => ({
+                ...p,
+                price:
+                    (p.cost.discount ? Math.min(p.cost.normal, p.cost.discount) : p.cost.normal) +
+                    (p.cost.delivery ?? 0),
+            }))
+                .sort(({ price: a }, { price: b }) => (a === b ? 0 : a > b ? 1 : -1))
+                .sort(({ type: a }, { type: b }) => (a === b ? 0 : a > b ? 1 : -1));
+        }
+
+        if (ignored === null) {
+            ignored = [];
+            selected = {};
+
+            for (const { id, type, ignore, status } of parts) {
+                if (!ignore && !selected[type]) {
+                    selected[type] = id;
+                } else if (ignore) {
+                    ignored.push(id);
+                }
+            }
+
+            selected = Object.values(selected);
+        }
+
+        const prevTotal = total;
+        const prevMaxTotal = maxtotal;
+
+        // Max total
+        {
+            maxtotal = {};
+
+            for (const { id, type, price, status } of parts) {
+                if (!ignored.includes(id)) {
+                    maxtotal[type] = maxtotal[type] ?? 0;
+                    maxtotal[type] = Math.max(maxtotal[type], price);
+                }
+            }
+
+            maxtotal = Object.values(maxtotal).reduce((pv, cv) => pv + cv, 0);
+        }
+
+        {
+            total = parts.filter(({ id }) => selected.includes(id)).reduce((pv, { price }) => pv + price, 0);
+        }
+
+        if (prevTotal !== total || prevMaxTotal !== maxtotal) {
+            resultFx = resultFx === 1 ? 2 : 1;
+        }
+        console.clear();
+        console.log("parts", parts);
+        _parts = parts.filter(({ id }) => editing || selected.includes(id));
+        console.log("_parts", _parts);
+
+        saved = !!(localStorage.getItem("ignored") || localStorage.getItem("selected"));
+    }
 
     function upd() {
         // Defaults
@@ -70,9 +128,10 @@
         if (prevTotal !== total || prevMaxTotal !== maxtotal) {
             resultFx = resultFx === 1 ? 2 : 1;
         }
-
-        _parts = _parts ?? parts;
-        parts = _parts.filter(({ id }) => editing || selected.includes(id));
+        console.clear();
+        console.log("parts", parts);
+        _parts = parts.filter(({ id }) => editing || selected.includes(id));
+        console.log("_parts", _parts);
 
         saved = !!(localStorage.getItem("ignored") || localStorage.getItem("selected"));
     }
@@ -121,15 +180,15 @@
         upd();
     }
 
-    $: {
-        console.clear();
-        console.log(
-            _parts
-                .filter(({ id }) => selected.includes(id))
-                .map(({ name }, index) => `#${index + 1}. ${name}`)
-                .join("\n"),
-        );
-    }
+    // $: {
+    //     console.clear();
+    //     console.log(
+    //         _parts
+    //             .filter(({ id }) => selected.includes(id))
+    //             .map(({ name }, index) => `#${index + 1}. ${name}`)
+    //             .join("\n"),
+    //     );
+    // }
 </script>
 
 <div class="parts">
@@ -143,7 +202,7 @@
             {editing}
             {ignored}
             {selected}
-            {parts}
+            parts={_parts}
             {saved}
         />
     {/each}

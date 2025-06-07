@@ -37,7 +37,7 @@
     }
 
     .strikethrough.ordered .line {
-        background-color: rgb(255, 165, 0);
+        background-color: rgba(255, 165, 0, 0.8);
     }
 
     @media (max-width: 599.95px) {
