@@ -5,12 +5,12 @@
     export let changeIgnored = () => {};
     export let changeSelected = () => {};
     export let editingChange = (editing) => {};
-    export let clear = () => {};
+    // export let clear = () => {};
     export let editing = false;
     export let ignored = [];
     export let selected = [];
     export let parts = [];
-    export let saved = false;
+    // export let saved = false;
 
     let current = 0;
 

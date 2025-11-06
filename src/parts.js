@@ -364,6 +364,20 @@ const Parts = [
         ],
         ignore: true,
     },
+
+    {
+        type: "ssd",
+        image: "00",
+        name: "c:ShareHubMotorolaPicturesScreenshotsScreenshot_20251106-184012.Privat24.png",
+        link: "https://hard.rozetka.com.ua/ua/samsung-mz-vap4t0bw/p501161474/",
+        seller: "rozetka",
+        costs: [
+            {
+                date: "2025-07-18",
+                normal: 23203,
+            },
+        ],
+    },
 ].map((p) => ({
     ...p,
     id: `${p.name}-${p.seller}`,
