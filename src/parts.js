@@ -317,7 +317,7 @@ const Parts = [
             },
         ],
         ignore: true,
-        status: "ordered",
+        // status: "ordered",
     },
 
     {
