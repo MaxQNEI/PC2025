@@ -20,10 +20,9 @@ const ctx = await mtd({
     logLevel: "info",
 });
 
-// if (isBuild) {
-//     await ctx.rebuild();
-//     process.exit(1);
-// }
+if (isBuild) {
+    await updTimestamp();
+}
 
 if (isDev) {
     await ctx.watch();
@@ -40,15 +39,7 @@ if (isDev) {
                 }
 
                 updTimeout && clearTimeout(updTimeout);
-                updTimeout = setTimeout(async () => {
-                    const now = Date.now();
-                    const html = (await FSP.readFile(PathIndexHTML, { encoding: "utf-8" })).replace(
-                        /"(bundle\.(js|css))(\?t=\d+)?"/g,
-                        `"$1?t=${now}"`,
-                    );
-
-                    await FSP.writeFile(PathIndexHTML, html, { encoding: "utf-8" });
-                }, 100);
+                updTimeout = setTimeout(updTimestamp, 100);
             }
         } catch (err) {
             if (err.name === "AbortError") {
@@ -58,4 +49,14 @@ if (isDev) {
             throw err;
         }
     })();
+}
+
+async function updTimestamp() {
+    const now = Date.now();
+    const html = (await FSP.readFile(PathIndexHTML, { encoding: "utf-8" })).replace(
+        /"(bundle\.(js|css))(\?t=\d+)?"/g,
+        `"$1?t=${now}"`,
+    );
+
+    await FSP.writeFile(PathIndexHTML, html, { encoding: "utf-8" });
 }
