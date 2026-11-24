@@ -268,7 +268,7 @@ const Parts = [
         name: 'Cepter Atilius HAS 27" QHD',
         link: "https://www.power.no/data-og-tilbehoer/skjermer/gamingskjerm/cepter-atilius-has-27-qhd-gamingskjerm/p-3781151/",
         seller: "no-power",
-        costs: [{ date: "2026-07-17", normal: 3499, currency: "nok" }],
+        costs: [{ date: "2026-07-17", normal: 15705.99, normalNOK: 3499 }],
         id: 'Cepter Atilius HAS 27" QHD-power-no',
         order: 1,
     },
@@ -279,7 +279,7 @@ const Parts = [
         name: "Logitech G502 X LIGHTSPEED",
         link: "https://www.power.no/gaming/pc-og-tilbehoer/gaming-mus-og-tastatur/gamingmus/logitech-g502-hero-spillmus/p-1064429/",
         seller: "no-power",
-        costs: [{ date: "2026-08-31", normal: 949, currency: "nok" }],
+        costs: [{ date: "2026-08-31", normal: 4385.59, normalNOK: 949 }],
         order: 2,
     },
 
@@ -289,7 +289,7 @@ const Parts = [
         name: "Logitech G512 Mechanical Gaming Keyboard (GX Brown Tactile Switches)",
         link: "https://www.elkjop.no/product/outlet/logitech-g512-gamingtastatur-gx-brown-brytere/193470",
         seller: "no-elkjop",
-        costs: [{ date: "2026-10-23", normal: 937, currency: "nok" }],
+        costs: [{ date: "2026-10-23", normal: 4384.02, normalNOK: 937 }],
         order: 3,
     },
 ].map((p) => ({

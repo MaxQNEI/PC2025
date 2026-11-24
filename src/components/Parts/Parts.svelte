@@ -25,6 +25,7 @@
                     (p.cost.discount ? Math.min(p.cost.normal, p.cost.discount) : p.cost.normal) +
                     (p.cost.delivery ?? 0),
             }))
+                .map((p) => ({ ...p, price: Math.ceil(p.price) }))
                 .sort(({ price: a }, { price: b }) => (a === b ? 0 : a > b ? 1 : -1))
                 .sort(({ type: a }, { type: b }) => (a === b ? 0 : a > b ? 1 : -1))
                 .sort(({ order: a }, { order: b }) => (a === b ? 0 : a > b ? 1 : -1));
@@ -86,6 +87,7 @@
                     (p.cost.discount ? Math.min(p.cost.normal, p.cost.discount) : p.cost.normal) +
                     (p.cost.delivery ?? 0),
             }))
+                .map((p) => ({ ...p, price: Math.ceil(p.price) }))
                 .sort(({ price: a }, { price: b }) => (a === b ? 0 : a > b ? 1 : -1))
                 .sort(({ type: a }, { type: b }) => (a === b ? 0 : a > b ? 1 : -1));
         }
@@ -129,10 +131,8 @@
         if (prevTotal !== total || prevMaxTotal !== maxtotal) {
             resultFx = resultFx === 1 ? 2 : 1;
         }
-        console.clear();
-        console.log("parts", parts);
+
         _parts = parts.filter(({ id }) => editing || selected.includes(id));
-        console.log("_parts", _parts);
 
         saved = !!(localStorage.getItem("ignored") || localStorage.getItem("selected"));
     }
