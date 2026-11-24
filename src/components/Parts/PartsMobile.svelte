@@ -144,7 +144,7 @@
                 <Strikethrough {status} />
 
                 <div class="image">
-                    <img src={`assets/${type}-${image}.png`} alt="product" />
+                    <img src={`assets/${type}-${image}.webp`} alt="product" />
                 </div>
 
                 <h2 class="name">
@@ -156,7 +156,7 @@
 
                 <a class="shop-cost" {href} target="_blank">
                     <div class="shop">
-                        <img class="seller" src={`assets/seller-${seller}.png`} alt={seller} />
+                        <img class="seller" src={`assets/seller-${seller}.webp`} alt={seller} />
                     </div>
 
                     <div class="cost">

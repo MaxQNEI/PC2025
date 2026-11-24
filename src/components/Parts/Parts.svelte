@@ -26,7 +26,8 @@
                     (p.cost.delivery ?? 0),
             }))
                 .sort(({ price: a }, { price: b }) => (a === b ? 0 : a > b ? 1 : -1))
-                .sort(({ type: a }, { type: b }) => (a === b ? 0 : a > b ? 1 : -1));
+                .sort(({ type: a }, { type: b }) => (a === b ? 0 : a > b ? 1 : -1))
+                .sort(({ order: a }, { order: b }) => (a === b ? 0 : a > b ? 1 : -1));
         }
 
         if (ignored === null) {
@@ -221,7 +222,6 @@
     .parts {
         display: grid;
         grid-template-rows: 1fr max-content;
-
         height: 100dvh;
     }
 

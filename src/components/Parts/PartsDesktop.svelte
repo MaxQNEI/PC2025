@@ -98,20 +98,20 @@
                 class="image"
                 class:selected={selected.includes(id)}
                 data-type={type}
-                onpointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.png` })}
+                onpointerover={() => (show = { ...show, active: true, image: `assets/${type}-${image}.webp` })}
                 onpointerleave={() => (show = { ...show, active: false })}
             >
                 <Strikethrough {status} />
 
                 <div class="img-wrap">
-                    <img src={`assets/${type}-${image}.png`} alt="product" />
+                    <img src={`assets/${type}-${image}.webp`} alt="product" />
                 </div>
             </div>
 
             <div class="info" class:selected={selected.includes(id)} data-type={type}>
                 <Strikethrough {status} />
 
-                <div class="bgimg" style="background-image: url(assets/{type}-{image}.png);"></div>
+                <div class="bgimg" style="background-image: url(assets/{type}-{image}.webp);"></div>
 
                 <h3>
                     <b>{type.toUpperCase()}</b>
@@ -123,7 +123,7 @@
                 <Strikethrough {status} />
 
                 <a {href} target="_blank">
-                    <img class="seller" src={`assets/seller-${seller}.png`} alt={seller} />
+                    <img class="seller" src={`assets/seller-${seller}.webp`} alt={seller} />
                 </a>
             </div>
 
@@ -249,6 +249,7 @@
         background: transparent center left / 400px no-repeat;
         filter: blur(2px);
         opacity: 0.1;
+        pointer-events: none;
     }
 
     .seller {
@@ -309,58 +310,34 @@
         transition: all 500ms ease;
     }
     .show img {
+        display: block;
         width: auto;
         max-width: 90dvw;
         max-height: 90dvh;
+        padding: 20px;
+        border-radius: 20px;
+        filter: drop-shadow(0 0 4px #444);
     }
     .show:not(.active) {
         transform: scale(0.9);
         opacity: 0;
     }
 
-    /*  */
-    [data-type]:not(.selected) {
-        filter: grayscale(0.5) opacity(0.5);
-    }
+    /* prettier-ignore */
+    @layer colors {
+        [data-type="case"] { border-bottom-color: rgba(71, 85, 105); background-color: rgba(71, 85, 105, 0.1); }
+        [data-type="cooler"] { border-bottom-color: rgba(56, 189, 248); background-color: rgba(56, 189, 248, 0.1); }
+        [data-type="cpu"] { border-bottom-color: rgba(239, 68, 68); background-color: rgba(239, 68, 68, 0.1); }
+        [data-type="motherboard"] { border-bottom-color: rgba(16, 185, 129); background-color: rgba(16, 185, 129, 0.1); }
+        [data-type="psu"] { border-bottom-color: rgba(234, 179, 8); background-color: rgba(234, 179, 8, 0.1); }
+        [data-type="ram"] { border-bottom-color: rgba(132, 204, 22); background-color: rgba(132, 204, 22, 0.1); }
+        [data-type="thermal-paste"] { border-bottom-color: rgba(156, 163, 175); background-color: rgba(156, 163, 175, 0.1); }
+        [data-type="gpu"] { border-bottom-color: rgba(168, 85, 247); background-color: rgba(168, 85, 247, 0.1); }
+        [data-type="ssd"] { border-bottom-color: rgba(249, 115, 22); background-color: rgba(249, 115, 22, 0.1); }
+        [data-type="monitor"] { border-bottom-color: rgba(59, 130, 246); background-color: rgba(59, 130, 246, 0.1); }
+        [data-type="mouse"] { border-bottom-color: rgba(236, 72, 153); background-color: rgba(236, 72, 153, 0.1); }
+        [data-type="keyboard"] { border-bottom-color: rgba(99, 102, 241); background-color: rgba(99, 102, 241, 0.1); }
 
-    [data-type="case"] {
-        border-bottom-color: rgba(100, 100, 100);
-        background-color: rgba(100, 100, 100, 0.1);
-    }
-
-    [data-type="cooler"] {
-        border-bottom-color: rgba(0, 150, 200);
-        background-color: rgba(0, 150, 200, 0.1);
-    }
-
-    [data-type="cpu"] {
-        border-bottom-color: rgba(200, 100, 0);
-        background-color: rgba(200, 100, 0, 0.1);
-    }
-
-    [data-type="motherboard"] {
-        border-bottom-color: rgba(50, 50, 150);
-        background-color: rgba(50, 50, 150, 0.1);
-    }
-
-    [data-type="psu"] {
-        border-bottom-color: rgba(80, 80, 80);
-        background-color: rgba(80, 80, 80, 0.1);
-    }
-
-    [data-type="ram"] {
-        border-bottom-color: rgba(0, 200, 100);
-        background-color: rgba(0, 200, 100, 0.1);
-    }
-
-    [data-type="thermal-paste"] {
-        border-bottom-color: rgba(160, 160, 160);
-        background-color: rgba(160, 160, 160, 0.1);
-    }
-
-    [data-type="gpu"] {
-        border-bottom-color: rgba(150, 0, 200);
-        background-color: rgba(150, 0, 200, 0.1);
     }
 
     .list > *:not(.tools, .header, .strikethrough) {

@@ -3,7 +3,15 @@ import esbuildSvelte from "esbuild-svelte";
 import FSP from "fs/promises";
 import { PathDocs, PathEntryPoint, PathIndexHTML, PathOutfile } from "../config.js";
 
-const ctx = await esbuild.context({
+const isBuild = process.argv.includes("--build");
+const isDev = !isBuild && process.argv.includes("--dev");
+
+console.log("isBuild", isBuild);
+console.log("isDev", isDev);
+
+const mtd = isBuild ? esbuild.build : esbuild.context;
+
+const ctx = await mtd({
     entryPoints: [PathEntryPoint],
     outfile: PathOutfile,
     bundle: true,
@@ -12,35 +20,42 @@ const ctx = await esbuild.context({
     logLevel: "info",
 });
 
-await ctx.watch();
+// if (isBuild) {
+//     await ctx.rebuild();
+//     process.exit(1);
+// }
 
-(async () => {
-    try {
-        const update = ["bundle.css", "bundle.js"];
-        const watcher = FSP.watch(PathDocs, { recursive: false });
+if (isDev) {
+    await ctx.watch();
 
-        let updTimeout;
-        for await (const event of watcher) {
-            if (!update.includes(event.filename)) {
-                continue;
+    (async () => {
+        try {
+            const update = ["bundle.css", "bundle.js"];
+            const watcher = FSP.watch(PathDocs, { recursive: false });
+
+            let updTimeout;
+            for await (const event of watcher) {
+                if (!update.includes(event.filename)) {
+                    continue;
+                }
+
+                updTimeout && clearTimeout(updTimeout);
+                updTimeout = setTimeout(async () => {
+                    const now = Date.now();
+                    const html = (await FSP.readFile(PathIndexHTML, { encoding: "utf-8" })).replace(
+                        /"(bundle\.(js|css))(\?t=\d+)?"/g,
+                        `"$1?t=${now}"`,
+                    );
+
+                    await FSP.writeFile(PathIndexHTML, html, { encoding: "utf-8" });
+                }, 100);
+            }
+        } catch (err) {
+            if (err.name === "AbortError") {
+                return;
             }
 
-            updTimeout && clearTimeout(updTimeout);
-            updTimeout = setTimeout(async () => {
-                const now = Date.now();
-                const html = (await FSP.readFile(PathIndexHTML, { encoding: "utf-8" })).replace(
-                    /"(bundle\.(js|css))(\?t=\d+)?"/g,
-                    `"$1?t=${now}"`,
-                );
-
-                await FSP.writeFile(PathIndexHTML, html, { encoding: "utf-8" });
-            }, 100);
+            throw err;
         }
-    } catch (err) {
-        if (err.name === "AbortError") {
-            return;
-        }
-
-        throw err;
-    }
-})();
+    })();
+}
